@@ -129,7 +129,7 @@ exports.loginUser = async (req, res) => {
         userType: existUser.user_type,
       },
       process.env.JWT_SECRET,
-      { expiresIn: existUser.user_type == "admin" ? "" : "1h" }
+      { expiresIn: "1h" }
     );
 
     return res.status(200).send({

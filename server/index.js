@@ -22,7 +22,7 @@ app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 // connect database
 connectDatabase();
 
-app.use("/api/user", userRoutes);
+app.use("/", userRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`)
