@@ -29,15 +29,18 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     user_degree: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Degree",
       required: true,
     },
     user_department: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
       required: true,
     },
     user_type: {
       type: String,
+      required: true,
       enum: ["admin", "hod", "staff", "student"],
     },
   },

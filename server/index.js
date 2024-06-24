@@ -6,6 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connectDatabase = require("./db/db");
 const userRoutes = require("./routes/userRoutes");
+const degreeRoutes = require("./routes/degreeRoute");
 
 //env config
 dotenv.config({ path: path.join(__dirname, ".", ".env") });
@@ -22,7 +23,7 @@ app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 // connect database
 connectDatabase();
 
-app.use("/", userRoutes);
+app.use("/", userRoutes, degreeRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`)
