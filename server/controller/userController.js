@@ -93,8 +93,6 @@ exports.loginUser = async (req, res) => {
   try {
     const { user_email, user_password } = req.body;
 
-    console.log(user_email);
-
     // Check if user exists by user_email
     const existUser = await userModel.findOne({
       user_email: user_email,

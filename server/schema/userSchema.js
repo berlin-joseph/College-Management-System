@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    user_name: {
-      type: String,
-      required: true,
-    },
     user_id: {
       type: String,
       required: true,
       unique: true,
+    },
+    user_name: {
+      type: String,
+      required: true,
     },
     user_email: {
       type: String,
@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema(
     user_degree: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Degree",
+      required: true,
+    },
+    user_start_year: {
+      type: String,
+      required: true,
+    },
+    user_end_year: {
+      type: String,
       required: true,
     },
     user_department: {
