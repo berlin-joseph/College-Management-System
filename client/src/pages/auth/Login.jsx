@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import InputComponent from "../../components/InputComponent";
 import { useAuthLoginMutation } from "../../Redux/api/authApi";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  // redux-toolkit
   const dispatch = useDispatch();
   const [loginMutation] = useAuthLoginMutation();
 
@@ -21,7 +23,15 @@ const Login = () => {
 
     try {
       const loginResponse = await loginMutation({ email, password }).unwrap();
-      console.log("Login response:", loginResponse);
+      const decoded = jwtDecode(loginResponse.data.token);
+
+      // console.log(decoded.userType, "decoded");
+
+      localStorage.setItem("authToken", loginResponse.data.token);
+
+      if (decoded.userType === "admin") {
+        navigate("/admin", { state: { userId: loginResponse.data.userId } });
+      }
 
       setEmail("");
       setPassword("");
