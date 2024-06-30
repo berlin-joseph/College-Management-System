@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const connectDatabase = require("./db/db");
 const userRoutes = require("./routes/userRoutes");
 const degreeRoutes = require("./routes/degreeRoute");
+const departmentRoutes = require("./routes/departmentRoute");
 
 //env config
 dotenv.config({ path: path.join(__dirname, ".", ".env") });
@@ -23,7 +24,8 @@ app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 // connect database
 connectDatabase();
 
-app.use("/", userRoutes, degreeRoutes);
+// Routes
+app.use("/", userRoutes, degreeRoutes, departmentRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`)

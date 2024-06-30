@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     user_end_year: {
       type: String,
-      required: true,
+      default: "",
     },
     user_department: {
       type: mongoose.Schema.Types.ObjectId,

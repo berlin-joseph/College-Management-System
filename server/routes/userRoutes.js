@@ -14,3 +14,4 @@ router.post("/loginUser", loginUser);
 router.delete("/deleteUser", deleteUser);
 
 module.exports = router;
+
