@@ -14,6 +14,13 @@ export const degreeApi = createApi({
         body: { degree_id: degreeId, degree_name: degreeName },
       }),
     }),
+    deleteDegreeById: build.mutation({
+      query: ({ id }) => ({
+        url: "degree/:id",
+        method: "DELETE",
+        body: { _id: id },
+      }),
+    }),
     getDegree: build.query({
       query: () => ({
         url: "degree",
@@ -22,4 +29,8 @@ export const degreeApi = createApi({
   }),
 });
 
-export const { useCreateDegreeMutation, useGetDegreeQuery } = degreeApi;
+export const {
+  useCreateDegreeMutation,
+  useDeleteDegreeByIdMutation,
+  useGetDegreeQuery,
+} = degreeApi;

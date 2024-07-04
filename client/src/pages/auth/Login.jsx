@@ -6,39 +6,50 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [passwordVisible, setPasswordVisible] = useState(false);
+   const navigate = useNavigate();
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+   const togglePasswordVisibility = () => {
+     setPasswordVisible(!passwordVisible);
+   };
 
-  const dispatch = useDispatch();
-  const [loginMutation] = useAuthLoginMutation();
+   const [loginMutation] = useAuthLoginMutation();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+   const handleLogin = async (e) => {
+     e.preventDefault();
 
-    try {
-      const loginResponse = await loginMutation({ email, password }).unwrap();
-      const decoded = jwtDecode(loginResponse.data.token);
+     try {
+       const loginResponse = await loginMutation({ email, password }).unwrap();
+       const decoded = jwtDecode(loginResponse.data.token);
 
-      // console.log(decoded.userType, "decoded");
+       localStorage.setItem("authToken", loginResponse.data.token);
+       localStorage.setItem("userType", decoded.userType);
 
-      localStorage.setItem("authToken", loginResponse.data.token);
+       console.log("Login response:", loginResponse);
+       console.log("Decoded token:", decoded);
 
-      if (decoded.userType === "admin") {
-        navigate("/admin", { state: { userId: loginResponse.data.userId } });
-      }
+       if (decoded.userType === "admin") {
+         console.log("Navigating to admin page");
+         navigate("/admin/staff", {
+           state: { userId: loginResponse.data.userId },
+         });
+       } else if (decoded.userType === "staff") {
+         console.log("Navigating to staff page");
+         navigate("/staff/students", {
+           state: { userId: loginResponse.data.userId },
+         });
+       } else {
+         console.log("Unknown user type");
+       }
 
-      setEmail("");
-      setPassword("");
-    } catch (error) {
-      console.error("Login error:", error);
-    }
-  };
+       setEmail("");
+       setPassword("");
+     } catch (error) {
+       console.error("Login error:", error);
+     }
+   };
 
   return (
     <section className="bg-gray-100 min-h-screen flex box-border justify-center items-center">

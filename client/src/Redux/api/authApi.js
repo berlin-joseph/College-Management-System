@@ -14,7 +14,41 @@ export const authApi = createApi({
         body: { user_email: email, user_password: password },
       }),
     }),
+    createUser: build.mutation({
+      query: (formData) => ({
+        url: "createUser",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+    getUserByType: build.mutation({
+      query: ({ userType }) => ({
+        url: "getUserByType",
+        method: "POST",
+        body: { user_type: userType },
+      }),
+    }),
+    deleteUserById: build.mutation({
+      query: ({ id }) => ({
+        url: "deleteUser",
+        method: "DELETE",
+        body: { _id: id },
+      }),
+    }),
+    getUserById: build.mutation({
+      query: ({ userId }) => ({
+        url: "getUserById",
+        method: "POST",
+        body: { _id: userId },
+      }),
+    }),
   }),
 });
 
-export const { useAuthLoginMutation } = authApi;
+export const {
+  useAuthLoginMutation,
+  useCreateUserMutation,
+  useGetUserByTypeMutation,
+  useDeleteUserByIdMutation,
+  useGetUserByIdMutation,
+} = authApi;

@@ -1,14 +1,16 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/auth/Login";
-import Home from "../pages/admin/Home/Home";
+import AdminIndex from "../pages/admin/Home/Home";
+import StaffIndex from "../pages/Staff/Home/Home";
 import Profile from "../pages/admin/Home/Profile";
-import Student from "../pages/admin/Student/Student";
+import AdminStudent from "../pages/admin/Student/Student";
 import Staff from "../pages/admin/Staff/Staff";
 import Degree from "../pages/admin/Degree/Degree";
 import Department from "../pages/admin/Departmrnt/Department";
+import Students from "../pages/Staff/Students/Students";
 
-const Notfound = () => {
+const NotFound = () => {
   return (
     <div className="h-screen w-screen bg-gray-50 flex items-center">
       <div className="container flex flex-col md:flex-row items-center justify-between px-5 text-gray-700">
@@ -38,17 +40,27 @@ const Notfound = () => {
 };
 
 const RouteIndex = () => {
-  const token = localStorage.getItem("authToken");
+  const userType = localStorage.getItem("userType");
 
   return (
     <Routes>
-      <Route index element={token ? <Navigate to="/admin" /> : <Login />} />
+      <Route
+        index
+        element={
+          userType === "admin" ? (
+            <Navigate to="/admin" />
+          ) : userType === "staff" ? (
+            <Navigate to="/staff" />
+          ) : (
+            <Login />
+          )
+        }
+      />
       <Route path="/login" element={<Login />} />
-
-      {token ? (
-        <Route path="/admin" element={<Home />}>
+      {userType === "admin" ? (
+        <Route path="/admin" element={<AdminIndex />}>
           <Route path="profile" element={<Profile />} />
-          <Route path="student" element={<Student />} />
+          <Route path="student" element={<AdminStudent />} />
           <Route path="staff" element={<Staff />} />
           <Route path="degree" element={<Degree />} />
           <Route path="department" element={<Department />} />
@@ -56,8 +68,14 @@ const RouteIndex = () => {
       ) : (
         <Route path="/admin/*" element={<Navigate to="/login" />} />
       )}
-
-      <Route path="*" element={<Notfound />} />
+      {userType === "staff" ? (
+        <Route path="/staff" element={<StaffIndex />}>
+          <Route path="students" element={<Students />} />
+        </Route>
+      ) : (
+        <Route path="/staff/*" element={<Navigate to="/login" />} />
+      )}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

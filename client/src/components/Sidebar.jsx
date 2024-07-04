@@ -9,22 +9,33 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const nav = [
-    {
-      id: 1,
-      name: "Staff",
-      icon: <LiaChalkboardTeacherSolid />,
-      url: "/admin/staff",
-    },
-    { id: 2, name: "Student", icon: <PiStudent />, url: "/admin/student" },
-    { id: 3, name: "Degree", icon: <GiNewspaper />, url: "/admin/degree" },
-    {
-      id: 4,
-      name: "Department",
-      icon: <PiWarehouseFill />,
-      url: "/admin/department",
-    },
-  ];
+  //
+  const userType = localStorage.getItem("userType");
+
+  const nav =
+    (userType === "admin" && [
+      {
+        id: 1,
+        name: "Staff",
+        icon: <LiaChalkboardTeacherSolid />,
+        url: "/admin/staff",
+      },
+      { id: 2, name: "Student", icon: <PiStudent />, url: "/admin/student" },
+      { id: 3, name: "Degree", icon: <GiNewspaper />, url: "/admin/degree" },
+      {
+        id: 4,
+        name: "Department",
+        icon: <PiWarehouseFill />,
+        url: "/admin/department",
+      },
+    ]) ||
+    (userType === "staff" && [
+      { id: 5, name: "Students", url: "/staff/students", icon: <PiStudent /> },
+      { id: 6, name: "Course", icon: <LiaChalkboardTeacherSolid /> },
+      { id: 7, name: "Mark" },
+      { id: 8, name: "Attendance" },
+    ]) ||
+    [];
 
   const getInitialSelected = () => {
     const currentPath = location.pathname;
@@ -40,6 +51,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("userType");
     navigate("/login");
   };
 

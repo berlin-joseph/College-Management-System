@@ -3,32 +3,46 @@ import CustomInput from "../../../components/CustomInput";
 import CustomButton from "../../../components/CustomButton";
 import {
   useCreateDegreeMutation,
+  useDeleteDegreeByIdMutation,
   useGetDegreeQuery,
 } from "../../../Redux/api/degreeApi";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
+import CustomTable from "../../../components/CustomTable";
 
 const Degree = () => {
-  const [degree, setDegree] = React.useState([]);
   const [degreeId, setDegreeId] = React.useState("");
   const [degreeName, setDegreeName] = React.useState("");
 
   // redux
   const [createDegree] = useCreateDegreeMutation();
-  const { data } = useGetDegreeQuery();
-
-  React.useEffect(() => {
-    setDegree(data);
-  }, []);
+  const [deleteDegreeById] = useDeleteDegreeByIdMutation();
+  const { data, refetch } = useGetDegreeQuery();
 
   const handleAdd = async () => {
     try {
       const addResponse = await createDegree({ degreeId, degreeName }).unwrap();
       console.log(addResponse, "addResponse");
+      refetch();
+      setDegreeId("");
+      setDegreeName("");
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleEdit = () => {};
+  const handleDelete = async (id) => {
+    console.log(id, "id");
+    try {
+      const deleteResponse = await deleteDegreeById({ id }).unwrap();
+      console.log(deleteResponse, "deleteResponse");
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="p-5 m-5 flex flex-col custom-shadow rounded-2xl w-full">
       <div className="space-x-4 flex">
@@ -45,15 +59,11 @@ const Degree = () => {
         <CustomButton label={"Add"} onClick={handleAdd} />
       </div>
       <hr className=" py-5 mt-10" />
-      <div>
-        {degree?.data?.map((val) => (
-          <div className=" flex items-center space-x-2">
-            <h1 className=" text-xl">{val.degree_name}</h1>
-            <TbEdit className=" text-2xl" />
-            <MdDelete className=" text-2xl" color="red" />
-          </div>
-        ))}
-      </div>
+      <CustomTable
+        data={data?.data}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };
