@@ -39,7 +39,10 @@ exports.getDepartment = async (req, res) => {
         status: true,
         success: true,
         message: `department fetch successfully`,
-        data: department,
+        data: department.map((department) => ({
+          ...department._doc,
+          name: department.department_name,
+        })),
       });
     }
     return res.status(400).send({

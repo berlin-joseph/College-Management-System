@@ -16,13 +16,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    user_image: {
-      type: String,
-      default: "",
-    },
     user_password: {
       type: String,
       required: true,
+    },
+    user_image: {
+      type: String,
+      default: "",
     },
     user_dob: {
       type: String,
@@ -33,17 +33,17 @@ const userSchema = new mongoose.Schema(
       ref: "Degree",
       required: true,
     },
+    user_department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+    },
     user_start_year: {
       type: String,
       required: true,
     },
     user_end_year: {
       type: String,
-      default: "",
-    },
-    user_department: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Department",
       required: true,
     },
     user_type: {

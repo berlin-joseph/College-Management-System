@@ -33,19 +33,22 @@ exports.createDegree = async (req, res) => {
 
 exports.getDegree = async (req, res) => {
   try {
-    const degree = await degreeModel.find();
-    if (degree) {
+    const degrees = await degreeModel.find();
+    if (degrees) {
       return res.status(200).send({
         status: true,
         success: true,
-        message: `degree fetch successfully`,
-        data: degree,
+        message: `Degrees fetched successfully`,
+        data: degrees.map((degree) => ({
+          ...degree._doc,
+          name: degree.degree_name,
+        })),
       });
     }
     return res.status(400).send({
       status: true,
       success: false,
-      message: `degree not available`,
+      message: `No degrees available`,
     });
   } catch (error) {
     return res.status(500).send({
@@ -55,6 +58,7 @@ exports.getDegree = async (req, res) => {
     });
   }
 };
+
 
 exports.getDegreeById = async (req, res) => {
   const { _id } = req.body;
