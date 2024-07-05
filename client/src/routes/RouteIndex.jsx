@@ -45,14 +45,14 @@ const RouteIndex = () => {
   return (
     <Routes>
       <Route
-        index
+        path="/"
         element={
           userType === "admin" ? (
             <Navigate to="/admin" />
           ) : userType === "staff" ? (
             <Navigate to="/staff" />
           ) : (
-            <Login />
+            <Navigate to="/login" />
           )
         }
       />
@@ -81,3 +81,6 @@ const RouteIndex = () => {
 };
 
 export default RouteIndex;
+
+
+
