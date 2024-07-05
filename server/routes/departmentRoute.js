@@ -5,11 +5,13 @@ const {
   getDepartmentById,
   updateDepartmentById,
   deleteDepartmentById,
+  getDepartmentsByDegree,
 } = require("../controller/departmentController");
 
 const router = express.Router();
 
 router.route("/department").post(createDepartment).get(getDepartment);
+router.route("/getDepartmentByDegree").post(getDepartmentsByDegree);
 router
   .route("/department/:id")
   .post(getDepartmentById)

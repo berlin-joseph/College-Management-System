@@ -10,6 +10,10 @@ const departmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    degree: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
   },
   { timestamps: true }
 );
