@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { PiStudent, PiWarehouseFill } from "react-icons/pi";
-import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { LiaChalkboardTeacherSolid, LiaLandmarkSolid } from "react-icons/lia";
 import { HiOutlineLogout } from "react-icons/hi";
 import { GiNewspaper } from "react-icons/gi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -28,12 +28,18 @@ const Sidebar = () => {
         icon: <PiWarehouseFill />,
         url: "/admin/department",
       },
+      {
+        id: 5,
+        name: "Course",
+        icon: <LiaLandmarkSolid />,
+        url: "/admin/course",
+      },
     ]) ||
     (userType === "staff" && [
-      { id: 5, name: "Students", url: "/staff/students", icon: <PiStudent /> },
-      { id: 6, name: "Course", icon: <LiaChalkboardTeacherSolid /> },
-      { id: 7, name: "Mark" },
-      { id: 8, name: "Attendance" },
+      { id: 1, name: "Students", url: "/staff/students", icon: <PiStudent /> },
+      { id: 2, name: "Course", icon: <LiaChalkboardTeacherSolid /> },
+      { id: 3, name: "Mark" },
+      { id: 4, name: "Attendance" },
     ]) ||
     [];
 

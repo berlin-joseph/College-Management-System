@@ -4,11 +4,12 @@ import Login from "../pages/auth/Login";
 import AdminIndex from "../pages/admin/Home/Home";
 import StaffIndex from "../pages/Staff/Home/Home";
 import Profile from "../pages/admin/Home/Profile";
-import AdminStudent from "../pages/admin/Student/Student";
-import Staff from "../pages/admin/Staff/Staff";
-import Degree from "../pages/admin/Degree/Degree";
-import Department from "../pages/admin/Departmrnt/Department";
+import AdminStudent from "../pages/admin/Student";
+import Staff from "../pages/admin/Staff";
+import Degree from "../pages/admin/Degree";
+import Department from "../pages/admin/Department";
 import Students from "../pages/Staff/Students/Students";
+import Course from "../pages/admin/Course";
 
 const NotFound = () => {
   return (
@@ -64,6 +65,7 @@ const RouteIndex = () => {
           <Route path="staff" element={<Staff />} />
           <Route path="degree" element={<Degree />} />
           <Route path="department" element={<Department />} />
+          <Route path="course" element={<Course />} />
         </Route>
       ) : (
         <Route path="/admin/*" element={<Navigate to="/login" />} />

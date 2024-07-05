@@ -27,17 +27,12 @@ const Login = () => {
       localStorage.setItem("authToken", loginResponse.data.token);
       localStorage.setItem("userType", decoded.userType);
 
-      console.log("Login response:", loginResponse);
-      console.log("Decoded token:", decoded);
-
       if (decoded.userType === "admin") {
-        console.log("Navigating to admin page");
         navigate("/admin/staff", {
           state: { userId: loginResponse.data.userId },
         });
         window.location.reload();
       } else if (decoded.userType === "staff") {
-        console.log("Navigating to staff page");
         navigate("/staff/students", {
           state: { userId: loginResponse.data.userId },
         });

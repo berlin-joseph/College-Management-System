@@ -1,14 +1,14 @@
 import React from "react";
-import CustomInput from "../../../components/CustomInput";
-import CustomButton from "../../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
 import {
   useCreateDegreeMutation,
   useDeleteDegreeByIdMutation,
   useGetDegreeQuery,
-} from "../../../Redux/api/degreeApi";
+} from "../../Redux/api/degreeApi";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
-import CustomTable from "../../../components/CustomTable";
+import CustomTable from "../../components/CustomTable";
 
 const Degree = () => {
   const [degreeId, setDegreeId] = React.useState("");
@@ -22,7 +22,7 @@ const Degree = () => {
   const handleAdd = async () => {
     try {
       const addResponse = await createDegree({ degreeId, degreeName }).unwrap();
-      console.log(addResponse, "addResponse");
+
       refetch();
       setDegreeId("");
       setDegreeName("");
@@ -33,10 +33,9 @@ const Degree = () => {
 
   const handleEdit = () => {};
   const handleDelete = async (id) => {
-    console.log(id, "id");
     try {
       const deleteResponse = await deleteDegreeById({ id }).unwrap();
-      console.log(deleteResponse, "deleteResponse");
+
       refetch();
     } catch (error) {
       console.log(error);

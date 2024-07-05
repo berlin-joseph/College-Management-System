@@ -8,10 +8,21 @@ export const departmentApi = createApi({
   }),
   endpoints: (build) => ({
     createDepartment: build.mutation({
-      query: ({ departmentId, departmentName }) => ({
+      query: ({ departmentId, departmentName, degree }) => ({
         url: "department",
         method: "POST",
-        body: { department_id: departmentId, department_name: departmentName },
+        body: {
+          department_id: departmentId,
+          department_name: departmentName,
+          degree,
+        },
+      }),
+    }),
+    getDepartmentByDegree: build.mutation({
+      query: ({ degreeName }) => ({
+        url: "getDepartmentByDegree",
+        method: "POST",
+        body: { degree_name: degreeName },
       }),
     }),
     deleteDepartment: build.mutation({
@@ -31,6 +42,7 @@ export const departmentApi = createApi({
 
 export const {
   useCreateDepartmentMutation,
+  useGetDepartmentByDegreeMutation,
   useDeleteDepartmentMutation,
   useGetDepartmentQuery,
 } = departmentApi;

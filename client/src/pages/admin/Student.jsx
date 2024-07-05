@@ -1,17 +1,17 @@
 import React from "react";
-import CustomInput from "../../../components/CustomInput";
-import CustomButton from "../../../components/CustomButton";
-import CustomTable from "../../../components/CustomTable";
-import CustomDropdown from "../../../components/CustomDropdown";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
+import CustomTable from "../../components/CustomTable";
+import CustomDropdown from "../../components/CustomDropdown";
 import {
   useCreateUserMutation,
   useDeleteUserByIdMutation,
   useGetUserByTypeMutation,
-} from "../../../Redux/api/authApi";
-import { useGetDegreeQuery } from "../../../Redux/api/degreeApi";
-import { useGetDepartmentQuery } from "../../../Redux/api/departmentApi";
-import CustomDatePicker from "../../../components/CustomDatePicker";
-import CustomFileUpload from "../../../components/CustomFileUpload";
+} from "../../Redux/api/authApi";
+import { useGetDegreeQuery } from "../../Redux/api/degreeApi";
+import { useGetDepartmentQuery } from "../../Redux/api/departmentApi";
+import CustomDatePicker from "../../components/CustomDatePicker";
+import CustomFileUpload from "../../components/CustomFileUpload";
 
 const Staff = () => {
   // state handle
@@ -27,8 +27,6 @@ const Staff = () => {
   const [userEndYear, setUserEndYear] = React.useState("");
   const [userImage, setUserImage] = React.useState(null);
   const [data, setData] = React.useState([]);
-
-  console.log(userStartYear, userEndYear);
 
   const userTypes = [
     { id: 1, name: "admin" },
@@ -50,7 +48,7 @@ const Staff = () => {
     const fetchData = async () => {
       try {
         const fetchResponse = await getUserByType({ userType: "student" });
-        console.log(fetchResponse);
+
         setData(fetchResponse?.data?.data);
       } catch (error) {
         console.log(error);
@@ -99,7 +97,6 @@ const Staff = () => {
   const handleDelete = async (id) => {
     try {
       const deleteResponse = await deleteUserById({ id }).unwrap();
-      console.log(deleteResponse, "deleteResponse");
 
       refetchUsers();
     } catch (error) {

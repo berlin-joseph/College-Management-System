@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const userId = location.state?.userId;
 
-  console.log(userId, "userId");
+
 
   const [getUserById] = useGetUserByIdMutation();
 
@@ -34,7 +34,7 @@ const Navbar = () => {
     fetchData();
   }, [getUserById]);
 
-  console.log(data);
+
 
   return (
     <nav>
