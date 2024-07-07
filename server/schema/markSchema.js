@@ -17,6 +17,11 @@ const markSchema = new mongoose.Schema(
       ref: "Subject",
       required: true,
     },
+    semester: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Semester",
+      required: true,
+    },
     mark: {
       type: String,
       required: true,
@@ -25,6 +30,6 @@ const markSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const markModel = mongoose.model(markSchema);
+const markModel = mongoose.model("Mark", markSchema);
 
 module.exports = markModel;
