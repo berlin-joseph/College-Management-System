@@ -10,6 +10,7 @@ import Degree from "../pages/admin/Degree";
 import Department from "../pages/admin/Department";
 import Students from "../pages/Staff/Students/Students";
 import Course from "../pages/admin/Course";
+import Semester from "../pages/admin/Semester";
 
 const NotFound = () => {
   return (
@@ -66,6 +67,7 @@ const RouteIndex = () => {
           <Route path="degree" element={<Degree />} />
           <Route path="department" element={<Department />} />
           <Route path="course" element={<Course />} />
+          <Route path="semester" element={<Semester />} />
         </Route>
       ) : (
         <Route path="/admin/*" element={<Navigate to="/login" />} />

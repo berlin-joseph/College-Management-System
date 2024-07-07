@@ -34,6 +34,12 @@ const Sidebar = () => {
         icon: <LiaLandmarkSolid />,
         url: "/admin/course",
       },
+      {
+        id: 6,
+        name: "Semester",
+        icon: <LiaLandmarkSolid />,
+        url: "/admin/semester",
+      },
     ]) ||
     (userType === "staff" && [
       { id: 1, name: "Students", url: "/staff/students", icon: <PiStudent /> },
