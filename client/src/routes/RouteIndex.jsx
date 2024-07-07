@@ -3,7 +3,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/auth/Login";
 import AdminIndex from "../pages/admin/Home/Home";
 import StaffIndex from "../pages/Staff/Home/Home";
-import Profile from "../pages/admin/Home/Profile";
 import AdminStudent from "../pages/admin/Student";
 import Staff from "../pages/admin/Staff";
 import Degree from "../pages/admin/Degree";
@@ -11,6 +10,8 @@ import Department from "../pages/admin/Department";
 import Students from "../pages/Staff/Students/Students";
 import Course from "../pages/admin/Course";
 import Semester from "../pages/admin/Semester";
+import HodStaff from "../pages/Hod/HodStaff";
+import HodStudents from "../pages/Hod/HodStudents";
 
 const NotFound = () => {
   return (
@@ -53,6 +54,8 @@ const RouteIndex = () => {
             <Navigate to="/admin" />
           ) : userType === "staff" ? (
             <Navigate to="/staff" />
+          ) : userType === "hod" ? (
+            <Navigate to="/hod" />
           ) : (
             <Navigate to="/login" />
           )
@@ -61,7 +64,6 @@ const RouteIndex = () => {
       <Route path="/login" element={<Login />} />
       {userType === "admin" ? (
         <Route path="/admin" element={<AdminIndex />}>
-          <Route path="profile" element={<Profile />} />
           <Route path="student" element={<AdminStudent />} />
           <Route path="staff" element={<Staff />} />
           <Route path="degree" element={<Degree />} />
@@ -78,6 +80,14 @@ const RouteIndex = () => {
         </Route>
       ) : (
         <Route path="/staff/*" element={<Navigate to="/login" />} />
+      )}
+      {userType === "hod" ? (
+        <Route path="/hod" element={<StaffIndex />}>
+          <Route path="staff" element={<HodStaff />} />
+          <Route path="students" element={<HodStudents />} />
+        </Route>
+      ) : (
+        <Route path="/hod/*" element={<Navigate to="/login" />} />
       )}
       <Route path="*" element={<NotFound />} />
     </Routes>

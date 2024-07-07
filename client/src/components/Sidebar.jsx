@@ -47,6 +47,15 @@ const Sidebar = () => {
       { id: 3, name: "Mark" },
       { id: 4, name: "Attendance" },
     ]) ||
+    (userType === "hod" && [
+      { id: 1, name: "Staff", url: "/hod/staff", icon: <PiStudent /> },
+      {
+        id: 2,
+        name: "Students",
+        url: "/hod/students",
+        icon: <LiaChalkboardTeacherSolid />,
+      },
+    ]) ||
     [];
 
   const getInitialSelected = () => {

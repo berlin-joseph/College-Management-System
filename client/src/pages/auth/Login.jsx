@@ -27,6 +27,8 @@ const Login = () => {
       localStorage.setItem("authToken", loginResponse.data.token);
       localStorage.setItem("userType", decoded.userType);
 
+      console.log(loginResponse.data.userId, "loginResponse.data.userId ");
+
       if (decoded.userType === "admin") {
         navigate("/admin/staff", {
           state: { userId: loginResponse.data.userId },
@@ -34,6 +36,11 @@ const Login = () => {
         window.location.reload();
       } else if (decoded.userType === "staff") {
         navigate("/staff/students", {
+          state: { userId: loginResponse.data.userId },
+        });
+        window.location.reload();
+      } else if (decoded.userType === "hod") {
+        navigate("/hod/staff", {
           state: { userId: loginResponse.data.userId },
         });
         window.location.reload();
