@@ -9,19 +9,21 @@ exports.createSubject = async (req, res) => {
     const { subject_name, semester, degree, department } = req.body;
     const Exist = await subjectModel.findOne({ subject_name });
     if (!Exist) {
-      const fetchDegree = await degreeModel.findById({ _id: degree });
+      const fetchDegree = await degreeModel.findOne({ degree_name: degree });
       if (fetchDegree) {
-        const fetchDepartment = await departmentModel.findById({
-          _id: department,
+        const fetchDepartment = await departmentModel.findOne({
+          department_name: department,
         });
         if (fetchDepartment) {
-          const fetchSemester = await semesterModel.findById({ _id: semester });
+          const fetchSemester = await semesterModel.findOne({
+            semester: semester,
+          });
           if (fetchSemester) {
             const subject = await subjectModel.create({
               subject_name,
-              degree,
-              department,
-              semester,
+              degree: fetchDegree._id,
+              department: fetchDepartment._id,
+              semester: fetchSemester._id,
             });
             return res.status(201).send({
               status: true,
@@ -31,19 +33,19 @@ exports.createSubject = async (req, res) => {
             });
           }
           return res.status(201).send({
-            status: false,
+            status: true,
             success: false,
             message: "Semester Not Available",
           });
         }
         return res.status(404).send({
-          status: false,
+          status: true,
           success: false,
           message: "Department Not Available",
         });
       }
       return res.status(404).send({
-        status: false,
+        status: true,
         success: false,
         message: "Degree Not Available",
       });
@@ -95,6 +97,39 @@ exports.updateSubjectById = async (req, res) => {
 };
 
 //
+exports.getSubject = async (req, res) => {
+  try {
+    const Exist = await subjectModel
+      .find()
+      .populate("degree")
+      .populate("department")
+      .populate("semester");
+    if (Exist) {
+      return res.status(200).send({
+        status: true,
+        success: true,
+        message: "Subject Found Successfully",
+        data: Exist.map((subject) => ({
+          ...subject._doc,
+          name: subject.subject_name,
+        })),
+      });
+    }
+    return res.status(404).send({
+      status: true,
+      success: false,
+      message: "Subject Not Available",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: false,
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//
 exports.getSubjectById = async (req, res) => {
   try {
     const { _id } = req.body;
@@ -106,15 +141,18 @@ exports.getSubjectById = async (req, res) => {
         .populate("degree")
         .populate("department")
         .populate("semester");
-      return res.status(404).send({
-        status: false,
-        success: false,
+      return res.status(200).send({
+        status: true,
+        success: true,
         message: "Subject Found Successfully",
-        data: subject,
+        data: subject.map((subject) => ({
+          ...subject._doc,
+          name: subject.subject_name,
+        })),
       });
     }
     return res.status(404).send({
-      status: false,
+      status: true,
       success: false,
       message: "Subject Not Available",
     });
@@ -136,14 +174,14 @@ exports.deleteSubjectById = async (req, res) => {
     if (Exist) {
       await subjectModel.findByIdAndDelete({ _id });
 
-      return res.status(404).send({
-        status: false,
-        success: false,
+      return res.status(201).send({
+        status: true,
+        success: true,
         message: "Subject Deleted Successfully",
       });
     }
     return res.status(404).send({
-      status: false,
+      status: true,
       success: false,
       message: "Subject Not Available",
     });
