@@ -31,5 +31,4 @@ const markSchema = new mongoose.Schema(
 );
 
 const markModel = mongoose.model("Mark", markSchema);
-
 module.exports = markModel;

@@ -51,11 +51,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ["admin", "hod", "staff", "student"],
     },
-    course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
-      default: "",
-    },
+    courses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject",
+        default: "",
+      },
+    ],
     Mark: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Mark",
