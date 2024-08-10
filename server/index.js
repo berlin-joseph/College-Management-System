@@ -27,16 +27,7 @@ app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 // connect database
 connectDatabase();
 
-// Routes
-app.use(
-  "/",
-  userRoutes,
-  degreeRoutes,
-  departmentRoutes,
-  leaveRoutes,
-  semesterRoutes,
-  subjectRoutes
-);
+app.get("/", (req, res) => res.send("Hello World!"));
 
 
 app.listen(process.env.PORT, () =>
