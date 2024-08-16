@@ -68,7 +68,12 @@ const userSchema = new mongoose.Schema(
       ref: "Leave",
       default: "",
     },
+    refresh_token: {
+      type: String,
+      required: true,
+    },
   },
+
   { timestamps: true }
 );
 
