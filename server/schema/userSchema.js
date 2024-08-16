@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
     user_type: {
       type: String,
       required: true,
-      enum: ["admin", "hod", "staff", "student"],
+      enum: ["super_admin", "admin", "hod", "staff", "student"],
     },
     courses: [
       {

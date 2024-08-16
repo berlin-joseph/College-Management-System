@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import InputComponent from "../../components/InputComponent";
 import { useAuthLoginMutation } from "../../Redux/api/authApi";
-import { jwtDecode } from "jwt-decode"; // Corrected import statement
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -23,6 +23,8 @@ const Login = () => {
     try {
       const loginResponse = await loginMutation({ email, password }).unwrap();
       const decoded = jwtDecode(loginResponse.data.token);
+
+      console.log(decoded, "decoded");
 
       localStorage.setItem("authToken", loginResponse.data.token);
       localStorage.setItem("userType", decoded.userType);

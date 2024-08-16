@@ -32,8 +32,10 @@ const Staff = () => {
   const [data, setData] = React.useState([]);
   const [departmentData, setDepartmentData] = React.useState([]);
 
+
+  const decodedUserType = localStorage.getItem("userType");
   const userTypes = [
-    { id: 1, name: "admin" },
+    ...(decodedUserType === "super_admin" ? [{ id: 1, name: "admin" }] : []),
     { id: 2, name: "hod" },
     { id: 3, name: "staff" },
     { id: 4, name: "student" },
