@@ -29,6 +29,16 @@ const Navbar = () => {
     }
   }, [getUserById, userId, userType, location]);
 
+  const pathname = location.pathname;
+
+  const basePath = pathname.split("/").slice(0, 2).join("/");
+
+  console.log(basePath, "basePath");
+
+  const handleProfile = () => {
+    navigate(`${basePath}/profile`);
+  };
+
   return (
     <nav>
       <div className="w-full">
@@ -36,7 +46,9 @@ const Navbar = () => {
           <div className="text-2xl">{userType.toLocaleUpperCase()}</div>
 
           {data?.user_image ? (
-            <img src={data.user_image} height={70} width={70} alt="User" />
+            <div onClick={handleProfile}>
+              <img src={data.user_image} height={70} width={70} alt="User" />
+            </div>
           ) : (
             <div
               className="hover:cursor-pointer"

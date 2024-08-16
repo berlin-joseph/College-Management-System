@@ -12,6 +12,7 @@ import Course from "../pages/admin/Course";
 import Semester from "../pages/admin/Semester";
 import HodStaff from "../pages/Hod/HodStaff";
 import HodStudents from "../pages/Hod/HodStudents";
+import Profile from "../components/Profile";
 
 const NotFound = () => {
   return (
@@ -51,7 +52,7 @@ const RouteIndex = () => {
         path="/"
         element={
           userType === "admin" ? (
-            <Navigate to="/admin" />
+            <Navigate to="/admin/staff" />
           ) : userType === "staff" ? (
             <Navigate to="/staff" />
           ) : userType === "hod" ? (
@@ -62,6 +63,7 @@ const RouteIndex = () => {
         }
       />
       <Route path="/login" element={<Login />} />
+
       {userType === "admin" ? (
         <Route path="/admin" element={<AdminIndex />}>
           <Route path="student" element={<AdminStudent />} />
@@ -70,6 +72,7 @@ const RouteIndex = () => {
           <Route path="department" element={<Department />} />
           <Route path="course" element={<Course />} />
           <Route path="semester" element={<Semester />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       ) : (
         <Route path="/admin/*" element={<Navigate to="/login" />} />
@@ -77,6 +80,7 @@ const RouteIndex = () => {
       {userType === "staff" ? (
         <Route path="/staff" element={<StaffIndex />}>
           <Route path="students" element={<Students />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       ) : (
         <Route path="/staff/*" element={<Navigate to="/login" />} />
@@ -85,6 +89,7 @@ const RouteIndex = () => {
         <Route path="/hod" element={<StaffIndex />}>
           <Route path="staff" element={<HodStaff />} />
           <Route path="students" element={<HodStudents />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       ) : (
         <Route path="/hod/*" element={<Navigate to="/login" />} />

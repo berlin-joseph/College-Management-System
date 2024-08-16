@@ -4,12 +4,16 @@ import { LiaChalkboardTeacherSolid, LiaLandmarkSolid } from "react-icons/lia";
 import { HiOutlineLogout } from "react-icons/hi";
 import { GiNewspaper } from "react-icons/gi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { IoPersonSharp } from "react-icons/io5";
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  //
+  const pathname = location.pathname;
+  const basePath = pathname.split("/").slice(0, 2).join("/");
+  console.log(basePath, "basePath");
+
   const userType = localStorage.getItem("userType");
 
   const nav =
@@ -61,14 +65,16 @@ const Sidebar = () => {
   const getInitialSelected = () => {
     const currentPath = location.pathname;
     const currentNavItem = nav.find((item) => currentPath.includes(item.url));
-    return currentNavItem ? currentNavItem.id : 1;
+    console.log(currentNavItem, "currentNavItem");
+
+    return currentNavItem ? currentNavItem.id : 0;
   };
 
   const [selected, setSelected] = React.useState(getInitialSelected);
 
   useEffect(() => {
     setSelected(getInitialSelected());
-  }, [location.pathname]);
+  }, [location.pathname, nav]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -76,26 +82,45 @@ const Sidebar = () => {
     navigate("/login");
   };
 
+  const handleProfile = () => {
+    navigate(`${basePath}/profile`);
+  };
+
+  const bottom = [
+    { id: 1, name: "Profile", icon: <IoPersonSharp />, fn: handleProfile },
+    { id: 2, name: "Logout", icon: <HiOutlineLogout />, fn: handleLogout },
+  ];
+
   return (
-    <nav className="p-5 m-5 flex flex-col justify-between custom-shadow rounded-2xl w-72 h-screen">
+    <nav className="p-6 m-4 flex flex-col justify-between bg-white shadow-lg rounded-xl w-64 h-screen">
       <div>
         {nav.map((val) => (
           <Link
             to={val.url}
             key={val.id}
-            className={`flex items-center py-5 cursor-pointer ${
-              selected === val.id ? "bg-gray-200 rounded-xl pl-5" : ""
-            }`}
+            className={`flex items-center py-3 px-4 mb-2 rounded-md transition-colors ${
+              selected === val.id
+                ? "bg-gray-200 text-gray-800"
+                : "text-gray-600"
+            } hover:bg-gray-100 hover:text-gray-800`}
             onClick={() => setSelected(val.id)}
           >
             <div className="text-2xl">{val.icon}</div>
-            <h1 className="text-xl pl-3">{val.name}</h1>
+            <span className="text-lg pl-3">{val.name}</span>
           </Link>
         ))}
       </div>
-      <div className="flex items-center cursor-pointer" onClick={handleLogout}>
-        <HiOutlineLogout className="text-2xl" />
-        <h1 className="text-xl pl-3">Logout</h1>
+      <div className="mt-auto">
+        {bottom.map((data) => (
+          <div
+            key={data.id}
+            className="flex items-center py-3 px-4 cursor-pointer mb-2 rounded-md transition-colors hover:bg-gray-100 hover:text-gray-800"
+            onClick={data.fn}
+          >
+            <div className="text-2xl"> {data.icon}</div>
+            <span className="text-lg pl-3">{data.name}</span>
+          </div>
+        ))}
       </div>
     </nav>
   );
