@@ -65,7 +65,6 @@ const Sidebar = () => {
   const getInitialSelected = () => {
     const currentPath = location.pathname;
     const currentNavItem = nav.find((item) => currentPath.includes(item.url));
-    console.log(currentNavItem, "currentNavItem");
 
     return currentNavItem ? currentNavItem.id : 0;
   };

@@ -132,7 +132,7 @@ const Staff = () => {
     refetchDegrees();
     refetchDepartments();
     getUserByType({ userType: "staff" }).then((response) => {
-      setData(response.data.data);
+      console.log(response.data, "hi");
     });
   };
 

@@ -106,6 +106,8 @@ exports.createUser = async (req, res) => {
       user_type,
       user_start_year,
       user_end_year,
+      Mark: null,
+      Leave: null,
       refresh_token: crypto.randomBytes(64).toString("hex"),
     });
 

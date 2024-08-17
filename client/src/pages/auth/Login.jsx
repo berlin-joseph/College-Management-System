@@ -4,6 +4,7 @@ import InputComponent from "../../components/InputComponent";
 import { useAuthLoginMutation } from "../../Redux/api/authApi";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const Login = () => {
 
     try {
       const loginResponse = await loginMutation({ email, password }).unwrap();
-      const decoded = jwtDecode(loginResponse.data.token);
+      const decoded = jwtDecode(loginResponse?.data?.accessToken);
 
       console.log(decoded, "decoded");
 
@@ -35,7 +36,17 @@ const Login = () => {
         navigate("/admin/staff", {
           state: { userId: loginResponse.data.userId },
         });
-        window.location.reload();
+        toast.success("Login Success", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // window.location.reload();
       } else if (decoded.userType === "staff") {
         navigate("/staff/students", {
           state: { userId: loginResponse.data.userId },
