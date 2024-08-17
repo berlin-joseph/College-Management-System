@@ -46,7 +46,7 @@ const Login = () => {
           progress: undefined,
           theme: "light",
         });
-        // window.location.reload();
+        window.location.reload();
       } else if (decoded.userType === "staff") {
         navigate("/staff/students", {
           state: { userId: loginResponse.data.userId },
